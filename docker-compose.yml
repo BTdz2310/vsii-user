@@ -1,0 +1,33 @@
+services:
+  postgis-user:
+    image: postgres:latest
+    container_name: user-postgresql
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: user_user
+      POSTGRES_PASSWORD: user_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - user_service:/var/lib/postgresql/data
+    restart: "no"
+    networks:
+      - kafka_network
+
+  user:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgis-user
+    ports:
+      - "3001:3001"
+    networks:
+      - kafka_network
+
+volumes:
+  user_service:
+
+networks:
+  kafka_network:
+    external: true

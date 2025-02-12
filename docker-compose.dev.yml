@@ -1,0 +1,21 @@
+services:
+  postgis-user:
+    image: postgres:latest
+    container_name: user-postgresql
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: user_user
+      POSTGRES_PASSWORD: user_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - user_service:/var/lib/postgresql/data
+    restart: "no"
+    networks:
+      - default
+      
+volumes:
+  user_service:
+
+networks:
+  default:
