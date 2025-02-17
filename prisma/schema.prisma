@@ -14,13 +14,18 @@ datasource db {
 }
 
 model User {
-  id          String    @id @default(uuid()) @map("id") @db.Uuid
-  authId      String    @unique @db.Uuid
-  fullName    String
-  username    String    @unique
-  email       String    @unique
-  role        Int
-  phoneNumber String?
-  avatar      String?
-  coursesId   Int[]     @default([])
+  id        String      @id @default(uuid()) @map("id") @db.Uuid
+  authId    String      @unique @db.Uuid
+  fullName  String
+  avatar    String?
+  watchList WatchList[]
+}
+
+model WatchList {
+  id        String   @id @default(uuid()) @map("id") @db.Uuid
+  authId    String   @db.Uuid
+  articleId String   @db.Uuid
+  createdAt DateTime @default(now())
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @db.Uuid
 }

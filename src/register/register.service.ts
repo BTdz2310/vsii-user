@@ -5,6 +5,7 @@ import {
 } from './dto/create-register.dto';
 import { ClientKafka } from '@nestjs/microservices';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class RegisterService {
@@ -13,17 +14,14 @@ export class RegisterService {
     private prisma: PrismaService,
   ) {}
 
-  async register(data: AuthPayloadRegisterDto) {
+  async register(data: Prisma.UserCreateInput) {
     try {
       // throw new Error();
       await this.prisma.user.create({
         data: {
           fullName: data.fullName,
-          phoneNumber: data.phoneNumber,
           authId: data.authId,
-          username: data.username,
-          email: data.email,
-          role: 0,
+          
         },
       });
     } catch {
@@ -39,12 +37,18 @@ export class RegisterService {
     // return `Hello ${message}`;
   }
 
+  check2(message: any) {
+    console.log(message)
+    return `Hello ${message}`;
+    // return `Hello ${message}`;
+  }
+
   async getUser(data: AuthPayloadGetUser) {
-    return this.prisma.user.findUnique({
-      where: {
-        authId: data.authId,
-        username: data.username,
-      },
-    });
+    // return this.prisma.user.findUnique({
+    //   where: {
+    //     authId: data.authId,
+    //     username: data.username,
+    //   },
+    // });
   }
 }

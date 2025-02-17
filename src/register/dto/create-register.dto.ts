@@ -1,9 +1,7 @@
 export class AuthPayloadRegisterDto {
   authId: string;
   fullName: string;
-  phoneNumber: string | null;
-  email: string;
-  username: string;
+  tags: string[];
 }
 
 export class AuthPayloadGetUser {

@@ -34,6 +34,12 @@ export class RegisterController {
     return checkMsg;
   }
 
+  @MessagePattern('auth.check2')
+  check2(@Payload() message: string) {
+    const checkMsg = this.registerService.check2(message);
+    return checkMsg;
+  }
+
   @MessagePattern('auth.getUser')
   async getUser(@Payload() data: AuthPayloadGetUser) {
     console.log('data', data);
