@@ -18,13 +18,13 @@ export class RegisterController {
     private readonly registerService: RegisterService,
   ) {}
 
-  onModuleInit() {
-    this.kafkaClient.connect();
-  }
+  // onModuleInit() {
+  //   this.kafkaClient.connect();
+  // }
 
   @EventPattern('auth.register')
   register(@Payload() data: AuthPayloadRegisterDto) {
-    console.log('wtf', data);
+    console.log(data);
     return this.registerService.register(data);
   }
 
@@ -42,9 +42,7 @@ export class RegisterController {
 
   @MessagePattern('auth.getUser')
   async getUser(@Payload() data: AuthPayloadGetUser) {
-    console.log('data', data);
     const user = await this.registerService.getUser(data);
-    console.log('user', user);
     return user;
   }
 }
